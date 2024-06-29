@@ -1,5 +1,7 @@
 import styles from "../../page.module.css";
 import { Client, fql } from "fauna";
+import MessageForm from "@/app/components/MessageForm";
+import MessageList from "@/app/components/MessageList";
 
 export default async function Room({ params }) {
   const client = new Client({
@@ -8,11 +10,20 @@ export default async function Room({ params }) {
 
   console.log(params);
   const response = await client.query(fql`
-    Room.byId(${params.id[0]})
+    let room = Room.byId(${params.id[0]})
+    let messages = Message.where(.room == room)
+    {
+      name: room.name,
+      messages: messages
+    }
   `);
+
+  console.log(response);
   return (
     <div className={styles.main}>
       <div>Welcome, {response.data.name}</div>
+      <MessageList messages={response.data.messages} />
+      <MessageForm roomId={params.id[0]} />
     </div>
   );
 }
