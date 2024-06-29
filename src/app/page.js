@@ -1,11 +1,26 @@
 "use client";
 import styles from "./page.module.css";
 import { useState } from "react";
+import { Client, fql } from "fauna";
 
 export default function Home() {
   const [roomName, setRoomName] = useState("");
 
-  const createNewRoom = async (e) => {};
+  const client = new Client({ secret: process.env.NEXT_PUBLIC_FAUNA_KEY });
+
+  const createNewRoom = async (e) => {
+    e.preventDefault();
+    try {
+      const newroom = await client.query(fql`
+        Room.create({
+        name: ${roomName},
+        })
+      `);
+      console.log(newroom);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main className={styles.main}>
