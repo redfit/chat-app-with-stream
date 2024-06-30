@@ -43,8 +43,8 @@ export default async function Home() {
           <input type="text" placeholder="Room name" name="roomName" />
           <button type="submit">Create room</button>
         </form>
+        <RoomList rooms={rooms} token={token} />
       </div>
-      <RoomList rooms={rooms} token={token} />
     </main>
   );
 }

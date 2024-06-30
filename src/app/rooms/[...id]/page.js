@@ -29,13 +29,12 @@ export default async function Room({ params }) {
   const messages = response.data.messages.data.map((message) => ({
     text: message.text,
     id: message.id,
-    author: message.author,
     authorName: message.authorName || "Anonymous",
   }));
 
   return (
     <div className={styles.main}>
-      <div>Welcome, {response.data.name}</div>
+      <h1>Welcome, {response.data.name}</h1>
       <MessageList messages={messages} roomId={params.id[0]} token={token} />
       <MessageForm roomId={params.id[0]} token={token} />
     </div>
