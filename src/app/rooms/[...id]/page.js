@@ -18,11 +18,15 @@ export default async function Room({ params }) {
     }
   `);
 
-  console.log(response);
+  const messages = response.data.messages.data.map((message) => ({
+    text: message.text,
+    id: message.id,
+  }));
+
   return (
     <div className={styles.main}>
       <div>Welcome, {response.data.name}</div>
-      <MessageList messages={response.data.messages} />
+      <MessageList messages={messages} roomId={params.id[0]} />
       <MessageForm roomId={params.id[0]} />
     </div>
   );

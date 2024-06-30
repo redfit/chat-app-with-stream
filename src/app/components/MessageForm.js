@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Client, fql } from "fauna";
 
 export default function MessageForm({ roomId }) {
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const client = new Client({
     secret: process.env.NEXT_PUBLIC_FAUNA_KEY,
   });
