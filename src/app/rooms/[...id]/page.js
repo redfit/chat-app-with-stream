@@ -29,6 +29,8 @@ export default async function Room({ params }) {
   const messages = response.data.messages.data.map((message) => ({
     text: message.text,
     id: message.id,
+    author: message.author,
+    authorName: message.authorName || "Anonymous",
   }));
 
   return (

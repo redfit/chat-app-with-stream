@@ -11,9 +11,12 @@ export default function MessageForm({ roomId, token }) {
   const createMessage = async (e) => {
     e.preventDefault();
     await client.query(fql`
+      let user = Query.identity()
       Message.create({
         text: ${message},
         room: Room.byId(${roomId}),
+        author: user,
+        authorName: user.username
       })
     `);
     setMessage("");

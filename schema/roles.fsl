@@ -25,4 +25,8 @@ role AuthRole {
     write
     delete
   }
+
+  privileges User {
+    read
+  }
 }
