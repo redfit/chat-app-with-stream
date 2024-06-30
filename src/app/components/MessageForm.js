@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Client, fql } from "fauna";
 
-export default function MessageForm({ roomId }) {
+export default function MessageForm({ roomId, token }) {
   const [message, setMessage] = useState("");
   const client = new Client({
-    secret: process.env.NEXT_PUBLIC_FAUNA_KEY,
+    secret: token,
   });
   const createMessage = async (e) => {
     e.preventDefault();

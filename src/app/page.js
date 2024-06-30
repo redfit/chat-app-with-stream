@@ -2,9 +2,17 @@ import styles from "./page.module.css";
 
 import { Client, fql } from "fauna";
 import RoomList from "@/app/components/RoomList";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const client = new Client({ secret: process.env.NEXT_PUBLIC_FAUNA_KEY });
+  const token = cookies().get("chat-app")?.value;
+
+  if (!token) {
+    redirect("/signin");
+  }
+
+  const client = new Client({ secret: token });
   const roomsResponse = await client.query(fql`Room.all()`);
   const rooms = roomsResponse.data?.data
     ? roomsResponse.data.data.map((room) => ({ id: room.id, name: room.name }))
@@ -12,7 +20,9 @@ export default async function Home() {
 
   const createNewRoom = async (formData) => {
     "use server";
-    const client = new Client({ secret: process.env.NEXT_PUBLIC_FAUNA_KEY });
+    const token = cookies().get("chat-app")?.value;
+
+    const client = new Client({ secret: token });
 
     try {
       const roomName = formData.get("roomName");
@@ -34,7 +44,7 @@ export default async function Home() {
           <button type="submit">Create room</button>
         </form>
       </div>
-      <RoomList rooms={rooms} />
+      <RoomList rooms={rooms} token={token} />
     </main>
   );
 }
