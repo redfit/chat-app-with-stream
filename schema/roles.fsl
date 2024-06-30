@@ -9,12 +9,16 @@ role UnAuthRole {
 }
 
 role AuthRole {
+
+  membership User
+
   privileges Room {
     read
     create
     write
     delete
   }
+
   privileges Message {
     read
     create

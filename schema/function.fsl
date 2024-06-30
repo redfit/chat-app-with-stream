@@ -14,5 +14,6 @@ function UserRegistration(username, email, password) {
 @role("server")
 function UserLogin(email, password) {
   let user = User.byEmail(email)
-  Credentials.byDocument(user)!.login(password, Time.now.add(3600, "seconds"))
+  Credentials.byDocument(user)!
+    .login(password, Time.now().add(3600, "seconds"))
 }
