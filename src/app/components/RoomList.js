@@ -49,6 +49,8 @@ export default function RoomList({ rooms }) {
     fetchRooms();
   }, []);
 
+  console.log(existingRooms);
+
   return (
     <div>
       <h2>All Rooms</h2>
